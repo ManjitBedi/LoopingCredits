@@ -1,14 +1,11 @@
 LoopingCredits
 ==============
 
-example of looping credits in Objective-C using a scrollview displaying a textview using attrributed text.  
+This is an example of looping credits displayed in a view controller coded in Objective-C. The credits are inserted into a scrollview in a textview.  
 
-The credits are loaded from a HTML 5 file.
+The credits are loaded from a HTML 5 file and an attributed string is created.
 
-This is adpated from a project that I worked on.
-
-The code is not quite working but nonetheless I think it is useufl.  It doing some interesitng things like interrupting an animation
-and resuming it based on a technical note from Apple.
+The code is not quite working but nonetheless I think it is useful.  The app is doing some interesitng things like interrupting a UIView animation and resuming it based on a technical note from Apple.
 
 https://developer.apple.com/library/ios/qa/qa1673/_index.html
 
