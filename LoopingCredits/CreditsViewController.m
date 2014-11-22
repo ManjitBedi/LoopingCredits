@@ -23,11 +23,14 @@
 
 - (void) viewDidLoad {
     [super viewDidLoad];
-    CGFloat tHeight;
-    CGFloat tWidth;
-    tHeight = self.view.bounds.size.width;
-    tWidth = self.view.bounds.size.height;
-    _scrollView.frame = CGRectMake(0, 0, tWidth, tHeight);
+
+    // Use this hack if the desired orientation is Landscape.
+    // and or modify viewSetup and invoke it in the viewDidAppear method...
+//    CGFloat tHeight;
+//    CGFloat tWidth;
+//    tHeight = self.view.bounds.size.width;
+//    tWidth = self.view.bounds.size.height;
+//    _scrollView.frame = CGRectMake(0, 0, tWidth, tHeight);
     _tapGestureRecognizer.enabled = NO;
     
     NSString *fileName = @"credits";
@@ -46,16 +49,6 @@
                                                   documentAttributes:NULL
                                                                error:&error];
     
-    [self viewSetup];
-    
-    CGFloat fontAverageSize;
-    // TODO: if the fonts change in the HTML files, these needs to be updated.
-    fontAverageSize = 26.0f;
-    
-    _velocity = fontAverageSize * 3.0f; // 3 lines per second
-    _duration  = _scrollView.contentSize.height / _velocity;
-    
-    [self setupScrollPerspective];
 }
 
 // Credit to the source of this method:
@@ -78,12 +71,18 @@
 
 - (void) viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    [self viewSetup];
+    CGFloat fontAverageSize;
+    fontAverageSize = 26.0f;
+    _velocity = fontAverageSize * 3.0f; // 3 lines per second
+    _duration  = _scrollView.contentSize.height / _velocity;
+    [self setupScrollPerspective];
     [self performSelector:@selector(animateCredits) withObject:self afterDelay:0.1];
 }
 
 #pragma mark - set up scroll view
-// Insert a text view into the scroll view and set the content size such that the we fake scrolling
-// infinitely.
+// Insert a text view into the scroll view and set the content size such that the we can fake
+// scrolling infinitely.
 //
 // The content area height is : scroll view height + text view height + scroll view height.
 //
