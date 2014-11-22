@@ -13,8 +13,9 @@
 		7847CD471A11381400C230C0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7847CD461A11381400C230C0 /* Images.xcassets */; };
 		7847CD4A1A11381400C230C0 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 7847CD481A11381400C230C0 /* LaunchScreen.xib */; };
 		7847CD561A11381400C230C0 /* LoopingCreditsTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 7847CD551A11381400C230C0 /* LoopingCreditsTests.m */; };
-		7847CD641A113B1E00C230C0 /* credits.html in Resources */ = {isa = PBXBuildFile; fileRef = 7847CD601A113B1E00C230C0 /* credits.html */; };
 		7847CD661A113B1E00C230C0 /* CreditsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7847CD631A113B1E00C230C0 /* CreditsViewController.m */; };
+		78E896C11A20081400A06517 /* credits_ipad.html in Resources */ = {isa = PBXBuildFile; fileRef = 78E896BF1A20081400A06517 /* credits_ipad.html */; };
+		78E896C21A20081400A06517 /* credits_iphone.html in Resources */ = {isa = PBXBuildFile; fileRef = 78E896C01A20081400A06517 /* credits_iphone.html */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,9 +40,11 @@
 		7847CD4F1A11381400C230C0 /* LoopingCreditsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LoopingCreditsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		7847CD541A11381400C230C0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7847CD551A11381400C230C0 /* LoopingCreditsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoopingCreditsTests.m; sourceTree = "<group>"; };
-		7847CD601A113B1E00C230C0 /* credits.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = credits.html; sourceTree = "<group>"; };
 		7847CD621A113B1E00C230C0 /* CreditsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreditsViewController.h; sourceTree = "<group>"; };
 		7847CD631A113B1E00C230C0 /* CreditsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreditsViewController.m; sourceTree = "<group>"; };
+		78E896BF1A20081400A06517 /* credits_ipad.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = credits_ipad.html; sourceTree = "<group>"; };
+		78E896C01A20081400A06517 /* credits_iphone.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = credits_iphone.html; sourceTree = "<group>"; };
+		78E896C31A200B9C00A06517 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,6 +68,7 @@
 		7847CD2D1A11381400C230C0 = {
 			isa = PBXGroup;
 			children = (
+				78E896C31A200B9C00A06517 /* README.md */,
 				7847CD381A11381400C230C0 /* LoopingCredits */,
 				7847CD521A11381400C230C0 /* LoopingCreditsTests */,
 				7847CD371A11381400C230C0 /* Products */,
@@ -125,7 +129,8 @@
 		7847CD5F1A113B1E00C230C0 /* credits */ = {
 			isa = PBXGroup;
 			children = (
-				7847CD601A113B1E00C230C0 /* credits.html */,
+				78E896BF1A20081400A06517 /* credits_ipad.html */,
+				78E896C01A20081400A06517 /* credits_iphone.html */,
 			);
 			path = credits;
 			sourceTree = "<group>";
@@ -211,10 +216,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				78E896C21A20081400A06517 /* credits_iphone.html in Resources */,
 				7847CD451A11381400C230C0 /* Main.storyboard in Resources */,
 				7847CD4A1A11381400C230C0 /* LaunchScreen.xib in Resources */,
 				7847CD471A11381400C230C0 /* Images.xcassets in Resources */,
-				7847CD641A113B1E00C230C0 /* credits.html in Resources */,
+				78E896C11A20081400A06517 /* credits_ipad.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -363,6 +369,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -375,6 +382,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -431,6 +439,7 @@
 				7847CD5B1A11381400C230C0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		7847CD5C1A11381400C230C0 /* Build configuration list for PBXNativeTarget "LoopingCreditsTests" */ = {
 			isa = XCConfigurationList;
@@ -439,6 +448,7 @@
 				7847CD5E1A11381400C230C0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

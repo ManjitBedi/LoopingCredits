@@ -31,7 +31,13 @@
     _tapGestureRecognizer.enabled = NO;
     
     NSString *fileName = @"credits";
-        
+    
+    if([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
+        fileName = [fileName stringByAppendingString:@"_ipad"];
+    } else {
+        fileName = [fileName stringByAppendingString:@"_iphone"];
+    }
+    
     // This is a new feature in iOS 7.  The HTML must not include any links...
     NSURL *url = [[NSBundle mainBundle] URLForResource:fileName withExtension:@"html"];
     NSError *error = nil;
@@ -48,7 +54,26 @@
     
     _velocity = fontAverageSize * 3.0f; // 3 lines per second
     _duration  = _scrollView.contentSize.height / _velocity;
+    
+    [self setupScrollPerspective];
 }
+
+// Credit to the source of this method:
+//
+// https://www.cocoacontrols.com/controls/swscrollview
+- (void) setupScrollPerspective {
+    
+    CATransform3D transform = CATransform3DIdentity;
+    //z distance
+    float distance = [[UIScreen mainScreen] bounds].size.height;
+    float ratio    = [[UIScreen mainScreen] bounds].size.height/[[UIScreen mainScreen] bounds].size.height;
+    transform.m34 = - ratio / distance;
+    transform = CATransform3DRotate(transform, 60.0f * M_PI / 180.0f, 1.f, 0.0f, 0.0f);
+    _scrollView.layer.transform = transform;
+    _scrollView.layer.zPosition = distance * ratio;
+    _scrollView.layer.position = CGPointMake([[UIScreen mainScreen] bounds].size.width/2, [[UIScreen mainScreen] bounds].size.height/3);
+}
+
 
 
 - (void) viewDidAppear:(BOOL)animated {
