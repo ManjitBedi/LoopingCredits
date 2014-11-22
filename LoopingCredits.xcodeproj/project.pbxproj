@@ -42,6 +42,8 @@
 		7847CD551A11381400C230C0 /* LoopingCreditsTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoopingCreditsTests.m; sourceTree = "<group>"; };
 		7847CD621A113B1E00C230C0 /* CreditsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CreditsViewController.h; sourceTree = "<group>"; };
 		7847CD631A113B1E00C230C0 /* CreditsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CreditsViewController.m; sourceTree = "<group>"; };
+		78B25CAB1A20111200C01104 /* image1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = image1.png; sourceTree = "<group>"; };
+		78B25CAC1A20111200C01104 /* image2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = image2.png; sourceTree = "<group>"; };
 		78E896BF1A20081400A06517 /* credits_ipad.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = credits_ipad.html; sourceTree = "<group>"; };
 		78E896C01A20081400A06517 /* credits_iphone.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = credits_iphone.html; sourceTree = "<group>"; };
 		78E896C31A200B9C00A06517 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
@@ -69,6 +71,8 @@
 			isa = PBXGroup;
 			children = (
 				78E896C31A200B9C00A06517 /* README.md */,
+				78B25CAB1A20111200C01104 /* image1.png */,
+				78B25CAC1A20111200C01104 /* image2.png */,
 				7847CD381A11381400C230C0 /* LoopingCredits */,
 				7847CD521A11381400C230C0 /* LoopingCreditsTests */,
 				7847CD371A11381400C230C0 /* Products */,
