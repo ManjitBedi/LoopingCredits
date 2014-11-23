@@ -1,6 +1,9 @@
 LoopingCredits
 ==============
 
+![Scrolling in action](https://github.com/ManjitBedi/LoopingCredits/blob/master/image1.png)
+
+
 This is an example of looping credits displayed in a view controller coded in Objective-C. The credits are inserted into a scrollview in a textview.  
 
 And now for some fun, a 3D transformation can be specify to rotate the text to make it look
@@ -10,7 +13,7 @@ The 3D transformation code is from this project on GitHub.
 
 https://github.com/somtd/SWScrollView
 
-The credits are loaded from a HTML 5 file and an attributed string is created.
+The credits are loaded from a HTML 5 file and an attributed string is created and displayed in the text view.
 
 The code is not quite working but nonetheless I think it is useful.  The app is doing some interesitng things like interrupting a UIView animation and resuming it based on a technical note from Apple.
 
