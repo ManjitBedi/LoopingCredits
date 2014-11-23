@@ -16,6 +16,7 @@
 @property NSUInteger numberOfLines;
 @property BOOL userInterruption;
 @property CGFloat duration;
+@property BOOL use3DTransform;
 @property CGFloat velocity;
 @end
 
@@ -32,15 +33,15 @@
 //    tWidth = self.view.bounds.size.height;
 //    _scrollView.frame = CGRectMake(0, 0, tWidth, tHeight);
     _tapGestureRecognizer.enabled = NO;
-    
+
     NSString *fileName = @"credits";
-    
+
     if([UIDevice currentDevice].userInterfaceIdiom == UIUserInterfaceIdiomPad) {
         fileName = [fileName stringByAppendingString:@"_ipad"];
     } else {
         fileName = [fileName stringByAppendingString:@"_iphone"];
     }
-    
+
     // This is a new feature in iOS 7.  The HTML must not include any links...
     NSURL *url = [[NSBundle mainBundle] URLForResource:fileName withExtension:@"html"];
     NSError *error = nil;
@@ -48,14 +49,13 @@
                                                              options:nil
                                                   documentAttributes:NULL
                                                                error:&error];
-    
+
 }
 
 // Credit to the source of this method:
 //
 // https://www.cocoacontrols.com/controls/swscrollview
-- (void) setupScrollPerspective {
-    
+- (void) applyPerspectiveTransform {
     CATransform3D transform = CATransform3DIdentity;
     //z distance
     float distance = [[UIScreen mainScreen] bounds].size.height;
@@ -68,6 +68,12 @@
 }
 
 
+- (void) removePerspectiveTransform {
+    _scrollView.layer.transform = CATransform3DIdentity;
+    _scrollView.layer.zPosition = 0;
+    _scrollView.layer.position = CGPointMake(0.5,0.5);
+}
+
 
 - (void) viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
@@ -76,7 +82,6 @@
     fontAverageSize = 26.0f;
     _velocity = fontAverageSize * 3.0f; // 3 lines per second
     _duration  = _scrollView.contentSize.height / _velocity;
-    [self setupScrollPerspective];
     [self performSelector:@selector(animateCredits) withObject:self afterDelay:0.1];
 }
 
@@ -118,19 +123,19 @@
 //
 - (void) viewSetup {
     CGPoint point = CGPointMake(0, _scrollView.frame.size.height);
-    
+
     // Position the text view just outside the visible area.
     UITextView *textView = [self createTextViewAtCoord:point];
     [_scrollView addSubview:textView];
-    
+
     // Need know adjust the frame size for the text view to show the full body of text
     _heightOfTextBody = [self textViewHeightForAttributedText:_creditsString andWidth:_scrollView.frame.size.width];
     CGRect tempRect = CGRectMake(textView.frame.origin.x, textView.frame.origin.y, textView.frame.size.width, _heightOfTextBody);
     textView.frame = tempRect;
-    
+
     CGSize newSize = CGSizeMake(_scrollView.frame.size.width, _scrollView.frame.size.height * 2 + tempRect.size.height);
     _scrollView.contentSize = newSize;
-    
+
 #ifdef DEBUG
     NSLog(@"scrollview content size %@",  NSStringFromCGSize(_scrollView.contentSize));
 #endif
@@ -155,7 +160,7 @@
     textView.userInteractionEnabled = NO; // The scrolling is done by the scroll view.
     textView.allowsEditingTextAttributes = NO;
     textView.selectable = NO;
-    
+
     return textView;
 }
 
@@ -163,15 +168,11 @@
 //  In the completion block for the animation, the method is called to start the sequence all over thus the animation keeps looping.
 //
 - (void) animateCredits {
-    
+#ifdef DEBUG
     NSLog(@"animate credits");
-    
     NSLog(@"layer speed %f", _scrollView.layer.speed);
     NSLog(@"layer timeOffset %f", _scrollView.layer.timeOffset);
-    
-    // Letting the user interact when an animation is playing is a bad experience.
-//    _scrollView.userInteractionEnabled = NO;
-    
+#endif
     [UIView animateWithDuration:_duration
                           delay:0.2f
                         options:UIViewAnimationOptionCurveLinear | UIViewAnimationOptionAllowUserInteraction
@@ -205,8 +206,6 @@
     CFTimeInterval pausedTime = [layer convertTime:CACurrentMediaTime() fromLayer:nil];
     layer.speed = 0.0;
     layer.timeOffset = pausedTime;
-    
-//    NSLog(@"layer offset %@", layer
 }
 
 
@@ -220,11 +219,25 @@
 }
 
 
+#pragma mark - button events
+- (IBAction)toggle3DEffect{
+    
+    if(_use3DTransform){
+        _use3DTransform = NO;
+        _button.selected = NO;
+        [self removePerspectiveTransform];
+    } else {
+        _use3DTransform = YES;
+        _button.selected= YES;
+        [self applyPerspectiveTransform];
+    }
+}
+
 #pragma mark - tap gesture handler
 - (IBAction)tapHandler:(UITapGestureRecognizer *)sender {
-
+#ifdef DEBUG
     NSLog(@"tap event");
-    
+#endif
     if(sender.state == UIGestureRecognizerStateRecognized && _userInterruption == NO) {
         _userInterruption = YES;
         [self pauseLayer:_scrollView.layer];
@@ -233,9 +246,7 @@
         [_scrollView.layer removeAllAnimations];
         for (CALayer* sublayer in [_scrollView.layer sublayers])
             [sublayer removeAllAnimations];
-
         [_scrollView setContentOffset:offset animated:NO];
-        
     } else if(sender.state == UIGestureRecognizerStateEnded ) {
         _userInterruption = NO;
         //[self resumeLayer:_scrollView.layer];
@@ -248,31 +259,39 @@
     //_scrollView.contentOffset = CGPointMake(0, 0);
     _scrollView.layer.timeOffset = 0.0;
     _scrollView.layer.speed = 1.0;
-    
     CGFloat newDistance = _scrollView.contentSize.height - _scrollView.contentOffset.y;
     _duration = newDistance / _velocity;
-    
     [self animateCredits];
 }
 
-#pragma mark - scroll view delegate methods
 
+#pragma mark - scroll view delegate methods
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+#ifdef DEBUG
     NSLog(@"scrolling ended");
-    _userInterruption = NO;
+#endif
+
     [self performSelector:@selector(resumeAnimation) withObject:nil afterDelay:1.0];
 }
 
+
 - (void) scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-    _userInterruption = YES;
-    [self pauseLayer:_scrollView.layer];
-    CGPoint offset = [_scrollView.layer.presentationLayer bounds].origin;
-    NSLog(@"offset %@",  NSStringFromCGPoint(offset));
-    [_scrollView.layer removeAllAnimations];
-    for (CALayer* sublayer in [_scrollView.layer sublayers])
-        [sublayer removeAllAnimations];
-    [_scrollView setContentOffset:offset animated:NO];
-    [self performSelector:@selector(resumeAnimation) withObject:nil afterDelay:1.0];
+    if(_userInterruption == NO) {
+#ifdef DEBUG
+        NSLog(@"stop animation");
+#endif
+        _userInterruption = YES;
+        [self pauseLayer:_scrollView.layer];
+        CGPoint offset = [_scrollView.layer.presentationLayer bounds].origin;
+#ifdef DEBUG
+        NSLog(@"offset %@",  NSStringFromCGPoint(offset));
+#endif
+        [_scrollView.layer removeAllAnimations];
+        for (CALayer* sublayer in [_scrollView.layer sublayers])
+            [sublayer removeAllAnimations];
+        [_scrollView setContentOffset:offset animated:NO];
+        [self performSelector:@selector(resumeAnimation) withObject:nil afterDelay:1.0];
+    }
 }
 
 @end

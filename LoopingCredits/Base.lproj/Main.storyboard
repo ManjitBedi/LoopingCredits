@@ -25,6 +25,18 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="8GM-s0-zUF"/>
                                 </connections>
                             </scrollView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7J2-Lb-LlC">
+                                <rect key="frame" x="20" y="20" width="50" height="50"/>
+                                <color key="backgroundColor" red="0.071435836918806284" green="0.71744468704997733" blue="1" alpha="0.5" colorSpace="calibratedRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <state key="normal" title="3D">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="selected" title="2D"/>
+                                <connections>
+                                    <action selector="toggle3DEffect" destination="BYZ-38-t0r" eventType="touchUpInside" id="9Jj-fO-alC"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="0.43529412150382996" blue="0.81176471710205078" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
@@ -37,6 +49,7 @@
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="iPad"/>
                     <connections>
+                        <outlet property="button" destination="7J2-Lb-LlC" id="RMh-gc-3rb"/>
                         <outlet property="scrollView" destination="xeO-2e-DKG" id="PAT-Kr-E6x"/>
                     </connections>
                 </viewController>

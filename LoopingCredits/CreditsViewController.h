@@ -11,6 +11,7 @@
 @interface CreditsViewController : UIViewController <UIGestureRecognizerDelegate, UIScrollViewDelegate>
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UITapGestureRecognizer *tapGestureRecognizer;
-
+@property (weak, nonatomic) IBOutlet UIButton *button;
 - (IBAction)tapHandler:(UITapGestureRecognizer *)sender;
+- (IBAction)toggle3DEffect;
 @end
