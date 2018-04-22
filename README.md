@@ -15,7 +15,7 @@ https://github.com/somtd/SWScrollView
 
 The credits are loaded from a HTML 5 file and an attributed string is created and displayed in the text view.
 
-The code is not quite working but nonetheless I think it is useful.  The app is doing some interesitng things like interrupting a UIView animation and resuming it based on a technical note from Apple.
+The code is not quite working but nonetheless I think it is useful.  The app is doing some interesitng things like interrupting a UIView animation and resuming the animation based on a technical note from Apple.
 
 https://developer.apple.com/library/ios/qa/qa1673/_index.html
 
