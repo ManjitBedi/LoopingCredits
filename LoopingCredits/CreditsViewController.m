@@ -11,6 +11,10 @@
 #import "CreditsViewController.h"
 
 @interface CreditsViewController ()
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (weak, nonatomic) IBOutlet UITapGestureRecognizer *tapGestureRecognizer;
+@property (weak, nonatomic) IBOutlet UIButton *button;
+
 @property (strong, nonatomic) NSAttributedString *creditsString;
 @property CGFloat heightOfTextBody;
 @property NSUInteger numberOfLines;
@@ -18,6 +22,11 @@
 @property CGFloat duration;
 @property BOOL use3DTransform;
 @property CGFloat velocity;
+
+
+- (IBAction)tapHandler:(UITapGestureRecognizer *)sender;
+- (IBAction)toggle3DEffect;
+
 @end
 
 @implementation CreditsViewController
@@ -42,13 +51,10 @@
         fileName = [fileName stringByAppendingString:@"_iphone"];
     }
 
-    // This is a new feature in iOS 7.  The HTML must not include any links...
+    // This is a new feature introduced in iOS 7.  The HTML must not include any links...
     NSURL *url = [[NSBundle mainBundle] URLForResource:fileName withExtension:@"html"];
     NSError *error = nil;
-    self.creditsString = [[NSAttributedString alloc] initWithFileURL:url
-                                                             options:nil
-                                                  documentAttributes:NULL
-                                                               error:&error];
+    self.creditsString = [[NSAttributedString alloc] initWithFileURL:url options: @{NSDocumentTypeDocumentAttribute: NSHTMLTextDocumentType} documentAttributes:nil error:&error];
 
 }
 
@@ -80,8 +86,8 @@
     [self viewSetup];
     CGFloat fontAverageSize;
     fontAverageSize = 26.0f;
-    _velocity = fontAverageSize * 3.0f; // 3 lines per second
-    _duration  = _scrollView.contentSize.height / _velocity;
+    self.velocity = fontAverageSize * 3.0f; // 3 lines per second
+    self.duration  = self.scrollView.contentSize.height / self.velocity;
     [self performSelector:@selector(animateCredits) withObject:self afterDelay:0.1];
 }
 
@@ -126,15 +132,15 @@
 
     // Position the text view just outside the visible area.
     UITextView *textView = [self createTextViewAtCoord:point];
-    [_scrollView addSubview:textView];
+    [self.scrollView addSubview:textView];
 
     // Need know adjust the frame size for the text view to show the full body of text
-    _heightOfTextBody = [self textViewHeightForAttributedText:_creditsString andWidth:_scrollView.frame.size.width];
-    CGRect tempRect = CGRectMake(textView.frame.origin.x, textView.frame.origin.y, textView.frame.size.width, _heightOfTextBody);
+    self.heightOfTextBody = [self textViewHeightForAttributedText:_creditsString andWidth:_scrollView.frame.size.width];
+    CGRect tempRect = CGRectMake(textView.frame.origin.x, textView.frame.origin.y, textView.frame.size.width, self.heightOfTextBody);
     textView.frame = tempRect;
 
-    CGSize newSize = CGSizeMake(_scrollView.frame.size.width, _scrollView.frame.size.height * 2 + tempRect.size.height);
-    _scrollView.contentSize = newSize;
+    CGSize newSize = CGSizeMake(self.scrollView.frame.size.width, self.scrollView.frame.size.height * 2 + tempRect.size.height);
+    self.scrollView.contentSize = newSize;
 
 #ifdef DEBUG
     NSLog(@"scrollview content size %@",  NSStringFromCGSize(_scrollView.contentSize));
@@ -170,24 +176,26 @@
 - (void) animateCredits {
 #ifdef DEBUG
     NSLog(@"animate credits");
-    NSLog(@"layer speed %f", _scrollView.layer.speed);
-    NSLog(@"layer timeOffset %f", _scrollView.layer.timeOffset);
+    NSLog(@"layer speed %f", self.scrollView.layer.speed);
+    NSLog(@"layer timeOffset %f", self.scrollView.layer.timeOffset);
 #endif
+    
+    __weak CreditsViewController *weakSelf = self;
     [UIView animateWithDuration:_duration
                           delay:0.2f
                         options:UIViewAnimationOptionCurveLinear | UIViewAnimationOptionAllowUserInteraction
                      animations:^{
-                         CGPoint newOffset = CGPointMake(0, _scrollView.contentSize.height  - _scrollView.frame.size.height /2);
+                         CGPoint newOffset = CGPointMake(0, weakSelf.scrollView.contentSize.height  - weakSelf.scrollView.frame.size.height /2);
                          NSLog(@"content offset %@", NSStringFromCGPoint(newOffset));
-                         _scrollView.contentOffset = newOffset;
+                         weakSelf.scrollView.contentOffset = newOffset;
                      }
                      completion:^(BOOL finished){
                          // If finished is false, the user may have interruped the animation.
                          if(finished) {
-                             _scrollView.contentOffset = CGPointMake(0, 0);
+                             weakSelf.scrollView.contentOffset = CGPointMake(0, 0);
                             // Need to adjust the duration as it may be have been changed during a user
                             // interaction.
-                            _duration = _scrollView.contentSize.height / _velocity;
+                            weakSelf.duration = weakSelf.scrollView.contentSize.height / weakSelf.velocity;
                             // This keeps the animation looping.
                             [self performSelector:@selector(animateCredits) withObject:self afterDelay:0.1];
                          } else {
