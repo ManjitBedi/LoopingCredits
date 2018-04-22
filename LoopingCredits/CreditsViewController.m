@@ -202,6 +202,21 @@
                              NSLog(@"animation did not finish");
                          }
                      }];
+    
+    [UIView animateWithDuration:_duration
+                          delay:0.2f
+                        options:UIViewAnimationOptionCurveLinear | UIViewAnimationOptionRepeat  | UIViewAnimationOptionAllowUserInteraction
+                     animations:^{
+                         CGPoint newOffset = CGPointMake(0, weakSelf.scrollView.contentSize.height  - weakSelf.scrollView.frame.size.height /2);
+                         NSLog(@"content offset %@", NSStringFromCGPoint(newOffset));
+                         weakSelf.scrollView.contentOffset = newOffset;
+                     }
+                     completion:^(BOOL finished){
+                         // If finished is false, the user may have interruped the animation.
+                         if(!finished) {
+                             NSLog(@"animation did not finish");
+                         }
+                     }];
 
 }
 

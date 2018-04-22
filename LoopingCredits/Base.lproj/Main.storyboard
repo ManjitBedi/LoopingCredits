@@ -22,32 +22,31 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xeO-2e-DKG">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xeO-2e-DKG">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7J2-Lb-LlC">
-                                        <rect key="frame" x="15" y="45" width="50" height="50"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="backgroundColor" red="0.071435836918806284" green="0.71744468704997733" blue="1" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="22"/>
-                                        <state key="normal" title="3D">
-                                            <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        </state>
-                                        <state key="selected" title="2D"/>
-                                        <connections>
-                                            <action selector="toggle3DEffect" destination="BYZ-38-t0r" eventType="touchUpInside" id="9Jj-fO-alC"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
                                 <connections>
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="8GM-s0-zUF"/>
                                 </connections>
                             </scrollView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7J2-Lb-LlC">
+                                <rect key="frame" x="36" y="30" width="30" height="39"/>
+                                <color key="backgroundColor" red="0.071435836918806284" green="0.71744468704997733" blue="1" alpha="0.5" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <state key="normal" title="3D">
+                                    <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <state key="selected" title="2D"/>
+                                <connections>
+                                    <action selector="toggle3DEffect" destination="BYZ-38-t0r" eventType="touchUpInside" id="9Jj-fO-alC"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="0.43529412150382996" blue="0.81176471710205078" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="7J2-Lb-LlC" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="10" id="64k-NT-ugV"/>
                             <constraint firstItem="xeO-2e-DKG" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="6Kn-Lr-9Bs"/>
+                            <constraint firstItem="7J2-Lb-LlC" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="20" id="CZY-sY-dBi"/>
                             <constraint firstAttribute="trailing" secondItem="xeO-2e-DKG" secondAttribute="trailing" id="Gs6-xr-N2s"/>
                             <constraint firstItem="xeO-2e-DKG" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="Kpy-zR-jh9"/>
                             <constraint firstAttribute="trailingMargin" secondItem="xeO-2e-DKG" secondAttribute="trailing" constant="-16" id="Syp-4c-fLh"/>
